@@ -10,11 +10,11 @@ class topsisMatrix():
     
     def __init__(self, data, numObj=0, numCrt=0, mode="default"):
         '''
-        init a topsisMatrix class object
-        param @mode can be 'kname', 'all' or 'default', which refers to the type of param@data.
-        'kname' means that @data is a array or list (1-dimensional), which only contains the name of criteria needed to be evaluate
-        'default' means that @data is a 2-dimensional array or list, which each row contains orinigal marks or scores of the same object's evalution correspond with the criteria
-        'all' means that @data is a 2-dimensional array or list, which the first row is 'kname'-type and rest of it is 'default'-type
+        init a topsisMatrix class object \n
+        param @mode can be 'kname', 'all' or 'default', which refers to the type of param@data. \n
+        'kname' means that @data is a array or list (1-dimensional), which only contains the name of criteria needed to be evaluate \n
+        'default' means that @data is a 2-dimensional array or list, which each row contains orinigal marks or scores of the same object's evalution correspond with the criteria \n
+        'all' means that @data is a 2-dimensional array or list, which the first row is 'kname'-type and rest of it is 'default'-type \n
         '''
         
         ''' number of object needed to be evaluate '''
@@ -27,7 +27,7 @@ class topsisMatrix():
         self.topMat = 0
         self.topNaMat = []
 
-        ''' Formulation Matrix '''
+        ''' Formulation Matrdix '''
         self.fotMat = 0
 
         ''' Weight Formulation Matrix '''
@@ -52,3 +52,52 @@ class topsisMatrix():
             self.kname = []
             ''' store org data '''
             self.push_back(data)
+
+    def __push_back_list(self, data):
+        ''' 
+            add another group data
+
+            WARNING: BUILD-IN Method, high risk operation
+        '''
+        if(isinstance(data, list)):
+            self.topNaMat.append(np.array(data,dtype=np.float64))
+
+
+    def push_back(self, data):
+        ''' 
+        add extra group of data 
+
+        data could be 2D list, 2D array & topsisMatrix
+        '''
+        
+        if(isinstance(data,list)):
+            self.ndUpdate = True
+            if(isinstance(data[0],list)):
+                for adata in data:
+                    self.__push_back_list(adata)
+            else:
+                self.topNaMat.append(np.array(data))
+        
+        elif(isinstance(data, np.ndarray)):
+            self.ndUpdate = True
+            self.topNaMat.append(data)
+
+        elif(isinstance(data, topsisMatrix)):
+            self.ndUpdate = True
+            for adata in data.topNaMat:
+                self.topNaMat.append(adata)
+        
+        else:
+            raise TypeError("data is a not supported type")
+        
+        self.genEvaMat()
+
+
+    def genEvaMat(self):
+        '''
+            generate evaluation Matrix and return the matrix
+        '''
+        if self.ndUpdate:
+            self.topMat = np.array(self.topNaMat)
+            self.ndUpdate = False
+        return self.topMat
