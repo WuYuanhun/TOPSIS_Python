@@ -101,3 +101,12 @@ class topsisMatrix():
             self.topMat = np.array(self.topNaMat)
             self.ndUpdate = False
         return self.topMat
+
+    def size(self):
+        '''
+            update the number of object and number of criteria 
+            and return as tuple
+        '''
+        self.numObj = len(self.topNaMat)
+        self.numCrt = len(self.topNaMat[0])
+        return (self.numObj, self.numCrt)
