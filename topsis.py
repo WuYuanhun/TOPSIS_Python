@@ -115,3 +115,12 @@ class topsisMatrix():
         '''
         return key name of criteria at position @idx
         '''
+        if not isinstance(idx, int):
+            raise TypeError()
+        if len(self.kname) <=0:
+            for i in range(0, self.numCrt):
+                self.kname.append("Crit" + str(i))
+        if len(self.kname) <= idx:
+            raise Exception("Out of Range")
+        else:
+            return self.kname[idx]
