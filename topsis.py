@@ -110,3 +110,8 @@ class topsisMatrix():
         self.numObj = len(self.topNaMat)
         self.numCrt = len(self.topNaMat[0])
         return (self.numObj, self.numCrt)
+
+    def knameAt(self, idx):
+        '''
+        return key name of criteria at position @idx
+        '''
