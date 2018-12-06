@@ -10,9 +10,9 @@ numpy (>= 1.15.4)
 
 ### Installing
 
+copy topsis.py to your workspace or folder where python can import  
+
 to install the newest numpy
 ```
 pip3 install numpy
 ```
-
-## Running the test
